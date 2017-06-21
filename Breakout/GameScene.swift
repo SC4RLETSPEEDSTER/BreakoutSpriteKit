@@ -15,18 +15,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var ball : SKSpriteNode!
     var paddle : SKSpriteNode!
     var brick : SKSpriteNode!
+    var brick2 : SKSpriteNode!
+    
+    var blockArray : [String] = []
+    var brickArray : [SKSpriteNode] = []
+    
     var loseZone : SKSpriteNode!
     
     
     override func didMove(to view: SKView)
     {
+        
         physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame) //makes edge of view part of physics
         createBackground()
         generatePaddle()
         makeBall()
-        conceiveBrick()
-        constructLoseZone()
+        conceiveBrick(Xpoint: Double(frame.minX + 60), Ypoint: Double(frame.maxY - 100), Name : "Sai the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 65 + frame.width/6), Ypoint: Double(frame.maxY - 100), Name : "Andrew")
+        conceiveBrick(Xpoint: Double(frame.minX + 70 + frame.width/3), Ypoint: Double(frame.maxY - 100), Name : "Akul")
+        conceiveBrick(Xpoint: Double(frame.minX + 75 + frame.width/2), Ypoint: Double(frame.maxY - 100), Name : "Ronak is not the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 80 + frame.width/1.5), Ypoint: Double(frame.maxY - 100), Name : "Aum is not the goat")
+        
+        
+        
         
     }
     
@@ -57,19 +69,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func didBegin(_ contact: SKPhysicsContact)
     {
-        if contact.bodyA.node?.name == "Brick" || contact.bodyB.node?.name == "Brick"
-        {
+            for bricks in brickArray
+            {
+            
+            if contact.bodyA.node?.name == bricks.name || contact.bodyB.node?.name == bricks.name
+            {
             print("Brick hit")
-            brick.removeFromParent()
-        }
+            bricks.removeFromParent()
+            }
+                
+            }
+        
         if contact.bodyA.node?.name == "Lose Zone" || contact.bodyB.node?.name == "Lose Zone"
         {
             print("You lose!")
+            let myAlert = UIAlertController(title: "You have lost a ball", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
+            let dismissButton = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+            myAlert.addAction(dismissButton)
+            
+
         }
+            
+        
     }
     
     
-    
+
     
     
     
@@ -132,15 +157,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
     }
     
-    func conceiveBrick()
+    func conceiveBrick(Xpoint : Double, Ypoint : Double, Name : String)
     {
         brick = SKSpriteNode(color: UIColor.green, size: CGSize(width: frame.width/6, height: frame.height/24.5))
-        brick.position = CGPoint(x: frame.midX, y: frame.maxY - 30)
-        brick.name = "Brick"
+        brick.position = CGPoint(x: Xpoint, y: Ypoint)
+        brick.name = Name
         brick.physicsBody = SKPhysicsBody(rectangleOf: brick.size)
         brick.physicsBody?.isDynamic = false
-        
+        blockArray.append(brick.name!)
+        brickArray.append(brick)
         addChild(brick)
+        
     }
     
     func constructLoseZone()
