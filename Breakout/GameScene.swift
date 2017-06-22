@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 // add to use contact physics
 class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
@@ -24,11 +25,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
     var livesLabel : SKLabelNode!
     var levelLabel : SKLabelNode!
     var level = 1
+    var sound: SKAction!
     
     override func didMove(to view: SKView)
     {
-        
-        
+        sound = SKAction.playSoundFileNamed("Background.mp3", waitForCompletion: false)
+        run(sound)
         physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame) //makes edge of view part of physics
         createBackground()
@@ -37,16 +39,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
         constructLoseZone()
         fabricateLives()
         installLevel()
-        conceiveBrick(Xpoint: Double(frame.minX + 60), Ypoint: Double(frame.maxY - 100), Name : "Sai the goat")
-        conceiveBrick(Xpoint: Double(frame.minX + 65 + frame.width/6), Ypoint: Double(frame.maxY - 100), Name : "Andrew")
-        conceiveBrick(Xpoint: Double(frame.minX + 70 + frame.width/3), Ypoint: Double(frame.maxY - 100), Name : "Akul")
-        conceiveBrick(Xpoint: Double(frame.minX + 75 + frame.width/2), Ypoint: Double(frame.maxY - 100), Name : "Ronak is not the goat")
-        conceiveBrick(Xpoint: Double(frame.minX + 80 + frame.width/1.5), Ypoint: Double(frame.maxY - 100), Name : "Aum is not the goat")
-        
-        
-        
-        
-        
+        conceiveBrick(Xpoint: Double(frame.minX + 45), Ypoint: Double(frame.maxY - 100), Name : "Sai the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 50 + frame.width/6), Ypoint: Double(frame.maxY - 100), Name : "Andrew")
+        conceiveBrick(Xpoint: Double(frame.minX + 55 + frame.width/3), Ypoint: Double(frame.maxY - 100), Name : "Akul")
+        conceiveBrick(Xpoint: Double(frame.minX + 60 + frame.width/2), Ypoint: Double(frame.maxY - 100), Name : "Ronak is not the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 65 + frame.width/1.5), Ypoint: Double(frame.maxY - 100), Name : "Aum is not the goat")
         
     }
     
@@ -88,10 +85,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
                 
                 if brickArray.count == 0
                 {
-                    nextLevelAlert(withTitle: "Nice Job!", message: "You have advanced to the next level! You now have two lives!")
+                    nextLevelAlert(withTitle: "Nice Job!", message: "You have advanced to the next level! You now have three lives!")
                     pauseGame()
                     levelTwo()
-                    fabricateLives()
                     
                 }
             }
@@ -102,22 +98,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
         
             if contact.bodyA.node?.name == "Lose Zone" || contact.bodyB.node?.name == "Lose Zone"
             {
-           
                 
                 print("\(life) before loop")
                 
                 if life > 1
                 {
                     life -= 1
+                    
                     showAlert(withTitle: "OH NO!", message: "You have lost a life!")
+                    
                     livesLabel.text = "Lives: \(life)"
                     pauseGame()
+                    
                 }
                 
                 else
                 {
                     pauseGame()
-                    gameOverAlert(withTitle: "Game Over!", message: "You have lost all of your lives!")
+                    gameOverAlert(withTitle: "GAME OVER!", message: "You have lost all of your lives!")
                 
                     restartGame()
                 }
@@ -129,10 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
         
     }
     
-    
 
-    
-    
     
     func createBackground()
     {
@@ -159,17 +154,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
     
     func makeBall()
     {
+        let ballTexture = SKTexture(image: #imageLiteral(resourceName: "ping pong"))
         let ballDiameter = frame.width/20
         ball = SKSpriteNode(color: UIColor.white, size: CGSize(width: ballDiameter, height: ballDiameter))
         ball.position = CGPoint(x: frame.midX, y: frame.midY)
         ball.name = "Ball"
+        ball.speed = 1
+        ball = SKSpriteNode(texture: ballTexture)
+        ball.setScale(0.05)
         
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ballDiameter/2)
         //applies physics body to ball
         
         ball.physicsBody?.isDynamic = false  //ignores all forces and impulses
         ball.physicsBody?.usesPreciseCollisionDetection = true
-        ball.physicsBody?.allowsRotation = false
+        ball.physicsBody?.allowsRotation = true
         ball.physicsBody?.friction = 0
         ball.physicsBody?.affectedByGravity = false
         ball.physicsBody?.restitution = 1
@@ -183,7 +182,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
     
     func generatePaddle()
     {
-        paddle = SKSpriteNode(color: UIColor.white, size: CGSize(width: frame.width/5, height: frame.height/25))
+        paddle = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width/5, height: frame.height/25))
         paddle.position = CGPoint(x: frame.midX, y: frame.minY + 125)
         paddle.name = "Paddle"
         paddle.physicsBody = SKPhysicsBody(rectangleOf: paddle.size)
@@ -208,7 +207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
     
     func constructLoseZone()
     {
-        loseZone = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width, height: 100))
+        loseZone = SKSpriteNode(color: UIColor.clear, size: CGSize(width: frame.width, height: 100))
         loseZone.position = CGPoint(x: frame.midX, y: frame.minY + 50)
         loseZone.name = "Lose Zone"
         loseZone.physicsBody = SKPhysicsBody(rectangleOf: loseZone.size)
@@ -247,8 +246,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
     
     func restartGame()
     {
+        brickArray.removeAll()
         removeAllChildren()
         life = 3
+        level = 1
         physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame) //makes edge of view part of physics
         createBackground()
@@ -257,40 +258,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alertable
         constructLoseZone()
         fabricateLives()
         installLevel()
-        conceiveBrick(Xpoint: Double(frame.minX + 60), Ypoint: Double(frame.maxY - 100), Name : "Sai the goat")
-        conceiveBrick(Xpoint: Double(frame.minX + 65 + frame.width/6), Ypoint: Double(frame.maxY - 100), Name : "Andrew")
-        conceiveBrick(Xpoint: Double(frame.minX + 70 + frame.width/3), Ypoint: Double(frame.maxY - 100), Name : "Akul")
-        conceiveBrick(Xpoint: Double(frame.minX + 75 + frame.width/2), Ypoint: Double(frame.maxY - 100), Name : "Ronak is not the goat")
-        conceiveBrick(Xpoint: Double(frame.minX + 80 + frame.width/1.5), Ypoint: Double(frame.maxY - 100), Name : "Aum is not the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 45), Ypoint: Double(frame.maxY - 100), Name : "Sai the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 50 + frame.width/6), Ypoint: Double(frame.maxY - 100), Name : "Andrew")
+        conceiveBrick(Xpoint: Double(frame.minX + 55 + frame.width/3), Ypoint: Double(frame.maxY - 100), Name : "Akul")
+        conceiveBrick(Xpoint: Double(frame.minX + 60 + frame.width/2), Ypoint: Double(frame.maxY - 100), Name : "Ronak is not the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 65 + frame.width/1.5), Ypoint: Double(frame.maxY - 100), Name : "Aum is not the goat")
     }
     
     func levelTwo()
     {
         removeAllChildren()
-        life = 2
+        life = 3
         level = 2
         physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame) //makes edge of view part of physics
         createBackground()
         generatePaddle()
         makeBall()
+        ball.physicsBody?.restitution = 1.01
+        ball.speed = 100
         constructLoseZone()
         fabricateLives()
         installLevel()
         
-        conceiveBrick(Xpoint: Double(frame.minX + 60), Ypoint: Double(frame.maxY - 100), Name : "Sai the goat")
-        conceiveBrick(Xpoint: Double(frame.minX + 65 + frame.width/6), Ypoint: Double(frame.maxY - 100), Name : "Andrew")
-        conceiveBrick(Xpoint: Double(frame.minX + 70 + frame.width/3), Ypoint: Double(frame.maxY - 100), Name : "Akul")
-        conceiveBrick(Xpoint: Double(frame.minX + 75 + frame.width/2), Ypoint: Double(frame.maxY - 100), Name : "Ronak is not the goat")
-        conceiveBrick(Xpoint: Double(frame.minX + 80 + frame.width/1.5), Ypoint: Double(frame.maxY - 100), Name : "Aum is not the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 45), Ypoint: Double(frame.maxY - 100), Name : "Sai the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 50 + frame.width/6), Ypoint: Double(frame.maxY - 100), Name : "Andrew")
+        conceiveBrick(Xpoint: Double(frame.minX + 55 + frame.width/3), Ypoint: Double(frame.maxY - 100), Name : "Akul")
+        conceiveBrick(Xpoint: Double(frame.minX + 60 + frame.width/2), Ypoint: Double(frame.maxY - 100), Name : "Ronak is not the goat")
+        conceiveBrick(Xpoint: Double(frame.minX + 65 + frame.width/1.5), Ypoint: Double(frame.maxY - 100), Name : "Aum is not the goat")
         
         
         
-        conceiveBrick(Xpoint: Double(frame.minX + 60), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Sai the ghat")
-        conceiveBrick(Xpoint: Double(frame.minX + 65 + frame.width/6), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Andrewh")
-        conceiveBrick(Xpoint: Double(frame.minX + 70 + frame.width/3), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Akulh")
-        conceiveBrick(Xpoint: Double(frame.minX + 75 + frame.width/2), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Ronak is not the goht")
-        conceiveBrick(Xpoint: Double(frame.minX + 80 + frame.width/1.5), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Aum is not the goht")
+        conceiveBrick(Xpoint: Double(frame.minX + 45), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Sai the ghat")
+        conceiveBrick(Xpoint: Double(frame.minX + 50 + frame.width/6), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Andrewh")
+        conceiveBrick(Xpoint: Double(frame.minX + 55 + frame.width/3), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Akulh")
+        conceiveBrick(Xpoint: Double(frame.minX + 60 + frame.width/2), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Ronak is not the goht")
+        conceiveBrick(Xpoint: Double(frame.minX + 65 + frame.width/1.5), Ypoint: Double(frame.maxY - 100 - frame.height/25 - 5), Name : "Aum is not the goht")
     }
     
     

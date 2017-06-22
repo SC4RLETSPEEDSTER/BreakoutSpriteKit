@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64531B551EFC2DC0002260CB /* Background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 64531B541EFC2DC0002260CB /* Background.mp3 */; };
 		64849D031EFAABB7001C03B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64849D021EFAABB7001C03B3 /* AppDelegate.swift */; };
 		64849D051EFAABB7001C03B3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 64849D041EFAABB7001C03B3 /* GameScene.sks */; };
 		64849D071EFAABB7001C03B3 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 64849D061EFAABB7001C03B3 /* Actions.sks */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		64531B541EFC2DC0002260CB /* Background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Background.mp3; path = ../../../../Downloads/Background.mp3; sourceTree = "<group>"; };
 		64849CFF1EFAABB7001C03B3 /* Breakout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Breakout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64849D021EFAABB7001C03B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64849D041EFAABB7001C03B3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				64849D1C1EFAABB7001C03B3 /* BreakoutTests */,
 				64849D271EFAABB7001C03B3 /* BreakoutUITests */,
 				64849D001EFAABB7001C03B3 /* Products */,
+				64531B541EFC2DC0002260CB /* Background.mp3 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -245,6 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64531B551EFC2DC0002260CB /* Background.mp3 in Resources */,
 				64849D0E1EFAABB7001C03B3 /* Main.storyboard in Resources */,
 				64849D051EFAABB7001C03B3 /* GameScene.sks in Resources */,
 				64849D101EFAABB7001C03B3 /* Assets.xcassets in Resources */,

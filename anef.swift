@@ -35,7 +35,7 @@ extension Alertable where Self: SKScene {
         
     }
     
-        func gameOverAlert(withTitle title: String, message: String)
+    func gameOverAlert(withTitle title: String, message: String)
         {
             
             func playGame()
@@ -46,8 +46,7 @@ extension Alertable where Self: SKScene {
             
             var alertController2 = UIAlertController(title: title, message: message, preferredStyle: .alert)
             
-            let restartAction = UIAlertAction(title: "Restart", style: .cancel) { (action) -> Void in playGame()
-            }
+            let restartAction = UIAlertAction(title: "Restart", style: .cancel) { (action) -> Void in playGame() }
             alertController2.addAction(restartAction)
             
             
