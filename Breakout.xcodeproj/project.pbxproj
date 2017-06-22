@@ -17,6 +17,7 @@
 		64849D131EFAABB7001C03B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64849D111EFAABB7001C03B3 /* LaunchScreen.storyboard */; };
 		64849D1E1EFAABB7001C03B3 /* BreakoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64849D1D1EFAABB7001C03B3 /* BreakoutTests.swift */; };
 		64849D291EFAABB7001C03B3 /* BreakoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64849D281EFAABB7001C03B3 /* BreakoutUITests.swift */; };
+		64849D391EFB6F3A001C03B3 /* anef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64849D381EFB6F3A001C03B3 /* anef.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		64849D241EFAABB7001C03B3 /* BreakoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BreakoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64849D281EFAABB7001C03B3 /* BreakoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakoutUITests.swift; sourceTree = "<group>"; };
 		64849D2A1EFAABB7001C03B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64849D381EFB6F3A001C03B3 /* anef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = anef.swift; path = ../anef.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				64849D041EFAABB7001C03B3 /* GameScene.sks */,
 				64849D061EFAABB7001C03B3 /* Actions.sks */,
 				64849D081EFAABB7001C03B3 /* GameScene.swift */,
+				64849D381EFB6F3A001C03B3 /* anef.swift */,
 				64849D0A1EFAABB7001C03B3 /* GameViewController.swift */,
 				64849D0C1EFAABB7001C03B3 /* Main.storyboard */,
 				64849D0F1EFAABB7001C03B3 /* Assets.xcassets */,
@@ -202,6 +205,7 @@
 				TargetAttributes = {
 					64849CFE1EFAABB7001C03B3 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = UUQSXCA3SX;
 						ProvisioningStyle = Automatic;
 					};
 					64849D181EFAABB7001C03B3 = {
@@ -273,6 +277,7 @@
 				64849D091EFAABB7001C03B3 /* GameScene.swift in Sources */,
 				64849D0B1EFAABB7001C03B3 /* GameViewController.swift in Sources */,
 				64849D031EFAABB7001C03B3 /* AppDelegate.swift in Sources */,
+				64849D391EFB6F3A001C03B3 /* anef.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,10 +431,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = UUQSXCA3SX;
 				INFOPLIST_FILE = Breakout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sai.Breakout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -438,10 +446,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = UUQSXCA3SX;
 				INFOPLIST_FILE = Breakout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sai.Breakout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -519,6 +530,7 @@
 				64849D2F1EFAABB7001C03B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		64849D301EFAABB7001C03B3 /* Build configuration list for PBXNativeTarget "BreakoutTests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +539,7 @@
 				64849D321EFAABB7001C03B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		64849D331EFAABB7001C03B3 /* Build configuration list for PBXNativeTarget "BreakoutUITests" */ = {
 			isa = XCConfigurationList;
@@ -535,6 +548,7 @@
 				64849D351EFAABB7001C03B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
